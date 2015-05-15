@@ -25,8 +25,8 @@ package org.apache.commons.rdf.api;
 public class DefaultRDFTermFactoryTest extends AbstractRDFTermFactoryTest {
 
     @Override
-    public RDFTermFactory createFactory() {
-        return new RDFTermFactory() {
+    public RDFContext createFactory() {
+        return new RDFContext() {
         };
     }
 

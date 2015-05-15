@@ -35,15 +35,15 @@ import org.junit.Test;
  * <p>
  * To add to your implementation's tests, create a subclass with a name ending
  * in <code>Test</code> and provide {@link #createFactory()} which minimally
- * must support {@link RDFTermFactory#createGraph()} and
- * {@link RDFTermFactory#createIRI(String)}, but ideally support all operations.
+ * must support {@link RDFContext#createGraph()} and
+ * {@link RDFContext#createIRI(String)}, but ideally support all operations.
  *
  * @see Graph
- * @see RDFTermFactory
+ * @see RDFContext
  */
 public abstract class AbstractGraphTest {
 
-    private RDFTermFactory factory;
+    private RDFContext factory;
     private Graph graph;
     private IRI alice;
     private IRI bob;
@@ -58,13 +58,14 @@ public abstract class AbstractGraphTest {
     private Literal companyName;
     private Triple bobNameTriple;
 
-    public abstract RDFTermFactory createFactory();
+    public abstract RDFContext createFactory();
 
     @Before
     public void createGraphAndAdd() {
         factory = createFactory();
         graph = factory.createGraph();
         assertEquals(0, graph.size());
+        assertEquals(factory,graph.getContext());
 
         alice = factory.createIRI("http://example.com/alice");
         bob = factory.createIRI("http://example.com/bob");

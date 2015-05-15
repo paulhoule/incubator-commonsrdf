@@ -18,6 +18,7 @@
 package org.apache.commons.rdf.simple;
 
 import org.apache.commons.rdf.api.IRI;
+import org.apache.commons.rdf.api.RDFContext;
 
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -27,7 +28,7 @@ import java.util.Set;
 /**
  * Types from the RDF and XML Schema vocabularies.
  */
-public final class Types implements IRI {
+public final class Types extends RDFImpl implements IRI {
 
     /**
      * <tt>http://www.w3.org/1999/02/22-rdf-syntax-ns#HTML</tt>
@@ -329,7 +330,8 @@ public final class Types implements IRI {
     private final IRI field;
 
     private Types(String field) {
-        this.field = new IRIImpl(field);
+        super(new SimpleRDFTermFactory());
+        this.field = new IRIImpl(getContext(),field);
     }
 
     @Override

@@ -33,20 +33,20 @@ import org.junit.Test;
  * in <code>Test</code> and provide {@link #createFactory()} which minimally
  * supports one of the operations, but ideally supports all operations.
  *
- * @see RDFTermFactory
+ * @see RDFContext
  */
 public abstract class AbstractRDFTermFactoryTest {
 
-    private RDFTermFactory factory;
+    private RDFContext factory;
 
     /**
-     * testCreate a new, distinct {@link RDFTermFactory} object using the
+     * testCreate a new, distinct {@link RDFContext} object using the
      * implementation being tested here.
      *
-     * @return a new, distinct {@link RDFTermFactory} object using the
+     * @return a new, distinct {@link RDFContext} object using the
      * implementation being tested here
      */
-    public abstract RDFTermFactory createFactory();
+    public abstract RDFContext createFactory();
 
     @Before
     public void setUp() {
@@ -58,6 +58,7 @@ public abstract class AbstractRDFTermFactoryTest {
         BlankNode bnode;
         try {
             bnode = factory.createBlankNode();
+            assertEquals(factory,bnode.getContext());
         } catch (UnsupportedOperationException ex) {
             Assume.assumeNoException(ex);
             return;
@@ -121,6 +122,7 @@ public abstract class AbstractRDFTermFactoryTest {
             return;
         }
 
+        assertEquals(factory,graph.getContext());
         assertEquals("Graph was not empty", 0, graph.size());
         graph.add(factory.createBlankNode(),
                 factory.createIRI("http://example.com/"),
@@ -142,6 +144,7 @@ public abstract class AbstractRDFTermFactoryTest {
             return;
         }
 
+        assertEquals(factory,example.getContext());
         assertEquals("http://example.com/", example.getIRIString());
         assertEquals("<http://example.com/>", example.ntriplesString());
 
@@ -181,9 +184,12 @@ public abstract class AbstractRDFTermFactoryTest {
             Assume.assumeNoException(ex);
             return;
         }
+
         IRI relative = factory.createIRI("../relative");
         assertEquals("../relative", relative.getIRIString());
         assertEquals("<../relative>", relative.ntriplesString());
+
+        assertEquals(factory, relative.getContext());
 
         IRI relativeTerm = factory.createIRI("../relative#term");
         assertEquals("../relative#term", relativeTerm.getIRIString());
@@ -204,6 +210,7 @@ public abstract class AbstractRDFTermFactoryTest {
             return;
         }
 
+        assertEquals(factory, example.getContext());
         assertEquals("Example", example.getLexicalForm());
         assertFalse(example.getLanguageTag().isPresent());
         assertEquals("http://www.w3.org/2001/XMLSchema#string", example
@@ -224,6 +231,7 @@ public abstract class AbstractRDFTermFactoryTest {
             Assume.assumeNoException(ex);
             return;
         }
+        assertEquals(factory, dateTime.getContext());
         assertEquals("2014-12-27T00:50:00T-0600", dateTime.getLexicalForm());
         assertFalse(dateTime.getLanguageTag().isPresent());
         assertEquals("http://www.w3.org/2001/XMLSchema#dateTime", dateTime
@@ -243,6 +251,7 @@ public abstract class AbstractRDFTermFactoryTest {
             return;
         }
 
+        assertEquals(factory, example.getContext());
         assertEquals("Example", example.getLexicalForm());
         assertEquals("en", example.getLanguageTag().get());
         assertEquals("http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
@@ -262,6 +271,7 @@ public abstract class AbstractRDFTermFactoryTest {
             return;
         }
 
+        assertEquals(factory, vls.getContext());
         assertEquals("vls", vls.getLanguageTag().get());
         assertEquals("http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
                 vls.getDatatype().getIRIString());
@@ -278,6 +288,7 @@ public abstract class AbstractRDFTermFactoryTest {
             Assume.assumeNoException(ex);
             return;
         }
+        assertEquals(factory,example.getContext());
         assertEquals("Example", example.getLexicalForm());
         assertFalse(example.getLanguageTag().isPresent());
         assertEquals("http://www.w3.org/2001/XMLSchema#string", example
@@ -297,6 +308,7 @@ public abstract class AbstractRDFTermFactoryTest {
             predicate = factory.createIRI("http://example.com/pred");
             object = factory.createBlankNode("b2");
             triple = factory.createTriple(subject, predicate, object);
+            assertEquals(factory,triple.getContext());
         } catch (UnsupportedOperationException ex) {
             Assume.assumeNoException(ex);
             return;
@@ -327,6 +339,7 @@ public abstract class AbstractRDFTermFactoryTest {
 
         // bnode equivalence should be OK as we used the same
         // factory and have not yet inserted Triple into a Graph
+        assertEquals(factory, triple.getContext());
         assertEquals(subject, triple.getSubject());
         assertEquals(predicate, triple.getPredicate());
         assertEquals(object, triple.getObject());
@@ -350,6 +363,7 @@ public abstract class AbstractRDFTermFactoryTest {
 
         // bnode equivalence should be OK as we used the same
         // factory and have not yet inserted Triple into a Graph
+        assertEquals(factory,triple.getContext());
         assertEquals(subject, triple.getSubject());
         assertEquals(predicate, triple.getPredicate());
         assertEquals(object, triple.getObject());

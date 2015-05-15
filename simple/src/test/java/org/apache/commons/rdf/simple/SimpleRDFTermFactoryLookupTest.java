@@ -24,17 +24,17 @@ import static org.junit.Assert.assertTrue;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 
-import org.apache.commons.rdf.api.RDFTermFactory;
+import org.apache.commons.rdf.api.RDFContext;
 import org.junit.Test;
 
 public class SimpleRDFTermFactoryLookupTest {
 
     @Test
     public void testServiceLoaderLookup() {
-        ServiceLoader<RDFTermFactory> loader = ServiceLoader.load(RDFTermFactory.class);
+        ServiceLoader<RDFContext> loader = ServiceLoader.load(RDFContext.class);
 
-        Iterator<RDFTermFactory> iterator = loader.iterator();
-        RDFTermFactory factory = iterator.next();
+        Iterator<RDFContext> iterator = loader.iterator();
+        RDFContext factory = iterator.next();
 
         assertTrue(factory instanceof SimpleRDFTermFactory);
         assertFalse(iterator.hasNext());

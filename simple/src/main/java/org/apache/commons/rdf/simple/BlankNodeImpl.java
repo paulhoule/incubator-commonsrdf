@@ -23,22 +23,24 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.commons.rdf.api.BlankNode;
+import org.apache.commons.rdf.api.RDFContext;
 
 /**
  * A simple implementation of BlankNode.
  */
-final class BlankNodeImpl implements BlankNode {
+final class BlankNodeImpl extends RDFImpl implements BlankNode {
 
     private static final UUID SALT = UUID.randomUUID();
     private static final AtomicLong COUNTER = new AtomicLong();
 
     private final String uniqueReference;
 
-    public BlankNodeImpl() {
-        this(SALT, Long.toString(COUNTER.incrementAndGet()));
+    public BlankNodeImpl(RDFContext context) {
+        this(context, SALT, Long.toString(COUNTER.incrementAndGet()));
     }
 
-    public BlankNodeImpl(UUID uuidSalt, String name) {
+    public BlankNodeImpl(RDFContext context,UUID uuidSalt, String name) {
+        super(context);
         if (Objects.requireNonNull(name).isEmpty()) {
             throw new IllegalArgumentException("Invalid blank node id: " + name);
         }
@@ -110,5 +112,4 @@ final class BlankNodeImpl implements BlankNode {
         }
         return true;
     }
-
 }

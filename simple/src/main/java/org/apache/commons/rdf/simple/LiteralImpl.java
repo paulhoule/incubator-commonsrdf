@@ -19,6 +19,7 @@ package org.apache.commons.rdf.simple;
 
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.Literal;
+import org.apache.commons.rdf.api.RDFContext;
 
 import java.util.IllformedLocaleException;
 import java.util.Locale;
@@ -28,7 +29,7 @@ import java.util.Optional;
 /**
  * A simple implementation of Literal.
  */
-final class LiteralImpl implements Literal {
+final class LiteralImpl extends RDFImpl implements Literal {
 
     private static final String QUOTE = "\"";
 
@@ -36,11 +37,12 @@ final class LiteralImpl implements Literal {
     private final String languageTag;
     private final String lexicalForm;
 
-    public LiteralImpl(String literal) {
-        this(literal, Types.XSD_STRING);
+    public LiteralImpl(RDFContext context,String literal) {
+        this(context,literal, Types.XSD_STRING);
     }
 
-    public LiteralImpl(String lexicalForm, IRI dataType) {
+    public LiteralImpl(RDFContext context,String lexicalForm, IRI dataType) {
+        super(context);
         this.lexicalForm = Objects.requireNonNull(lexicalForm);
         this.dataType = Types.get(Objects.requireNonNull(dataType)).orElse(
                 dataType);
@@ -52,7 +54,8 @@ final class LiteralImpl implements Literal {
         this.languageTag = null;
     }
 
-    public LiteralImpl(String literal, String languageTag) {
+    public LiteralImpl(RDFContext context,String literal, String languageTag) {
+        super(context);
         this.lexicalForm = Objects.requireNonNull(literal);
         this.languageTag = Objects.requireNonNull(languageTag).toLowerCase(
                 Locale.ENGLISH);

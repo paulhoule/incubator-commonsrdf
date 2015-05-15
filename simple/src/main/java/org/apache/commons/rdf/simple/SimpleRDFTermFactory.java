@@ -25,7 +25,7 @@ import org.apache.commons.rdf.api.Graph;
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.Literal;
 import org.apache.commons.rdf.api.RDFTerm;
-import org.apache.commons.rdf.api.RDFTermFactory;
+import org.apache.commons.rdf.api.RDFContext;
 import org.apache.commons.rdf.api.Triple;
 
 /**
@@ -35,7 +35,7 @@ import org.apache.commons.rdf.api.Triple;
  * simple in-memory Implementations that are not thread-safe or efficient, but
  * which may be useful for testing and prototyping purposes.
  */
-public class SimpleRDFTermFactory implements RDFTermFactory {
+public class SimpleRDFTermFactory implements RDFContext {
 
     /** Unique salt per instance, for {@link #createBlankNode(String)}
      */
@@ -43,12 +43,12 @@ public class SimpleRDFTermFactory implements RDFTermFactory {
 
     @Override
     public BlankNode createBlankNode() {
-        return new BlankNodeImpl();
+        return new BlankNodeImpl(this);
     }
 
     @Override
     public BlankNode createBlankNode(String name) {
-        return new BlankNodeImpl(SALT, name);
+        return new BlankNodeImpl(this,SALT, name);
     }
 
     @Override
@@ -60,29 +60,29 @@ public class SimpleRDFTermFactory implements RDFTermFactory {
 
     @Override
     public IRI createIRI(String iri) {
-        IRI result = new IRIImpl(iri);
+        IRI result = new IRIImpl(this,iri);
         // Reuse any IRI objects already created in Types
         return Types.get(result).orElse(result);
     }
 
     @Override
     public Literal createLiteral(String literal) {
-        return new LiteralImpl(literal);
+        return new LiteralImpl(this,literal);
     }
 
     @Override
     public Literal createLiteral(String literal, IRI dataType) {
-        return new LiteralImpl(literal, dataType);
+        return new LiteralImpl(this,literal, dataType);
     }
 
     @Override
     public Literal createLiteral(String literal, String language) {
-        return new LiteralImpl(literal, language);
+        return new LiteralImpl(this,literal, language);
     }
 
     @Override
     public Triple createTriple(BlankNodeOrIRI subject, IRI predicate,
                                RDFTerm object) {
-        return new TripleImpl(subject, predicate, object);
+        return new TripleImpl(this,subject, predicate, object);
     }
 }

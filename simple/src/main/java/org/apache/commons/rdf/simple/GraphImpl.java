@@ -33,14 +33,15 @@ import java.util.stream.Stream;
  * <p>
  * All Stream operations are performed using parallel and unordered directives.
  */
-final class GraphImpl implements Graph {
+final class GraphImpl extends RDFImpl implements Graph {
 
     private static final int TO_STRING_MAX = 10;
     private final Set<Triple> triples = new HashSet<Triple>();
-    private final SimpleRDFTermFactory factory;
+    private final RDFContext factory;
 
-    GraphImpl(SimpleRDFTermFactory simpleRDFTermFactory) {
-        this.factory = simpleRDFTermFactory;
+    GraphImpl(RDFContext factory) {
+        super(factory);
+        this.factory = factory;
     }
 
     @Override

@@ -17,17 +17,14 @@
  */
 package org.apache.commons.rdf.simple;
 
-import org.apache.commons.rdf.api.BlankNodeOrIRI;
-import org.apache.commons.rdf.api.IRI;
-import org.apache.commons.rdf.api.RDFTerm;
-import org.apache.commons.rdf.api.Triple;
+import org.apache.commons.rdf.api.*;
 
 import java.util.Objects;
 
 /**
  * A simple implementation of Triple.
  */
-final class TripleImpl implements Triple {
+final class TripleImpl extends RDFImpl implements Triple {
 
     private final BlankNodeOrIRI subject;
     private final IRI predicate;
@@ -43,7 +40,8 @@ final class TripleImpl implements Triple {
      * @param predicate predicate of triple
      * @param object    object of triple
      */
-    public TripleImpl(BlankNodeOrIRI subject, IRI predicate, RDFTerm object) {
+    public TripleImpl(RDFContext context,BlankNodeOrIRI subject, IRI predicate, RDFTerm object) {
+        super(context);
         this.subject = Objects.requireNonNull(subject);
         this.predicate = Objects.requireNonNull(predicate);
         this.object = Objects.requireNonNull(object);

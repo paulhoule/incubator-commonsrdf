@@ -18,17 +18,19 @@
 package org.apache.commons.rdf.simple;
 
 import org.apache.commons.rdf.api.IRI;
+import org.apache.commons.rdf.api.RDFContext;
 
 import java.net.URI;
 
 /**
  * A simple implementation of IRI.
  */
-final class IRIImpl implements IRI {
+final class IRIImpl extends RDFImpl implements IRI {
 
     private final String iri;
 
-    public IRIImpl(String iri) {
+    public IRIImpl(RDFContext context,String iri) {
+        super(context);
         // should throw IllegalArgumentException on most illegal IRIs
         URI.create(iri);
         // NOTE: We don't keep the URI as it uses outdated RFC2396 and will get

@@ -27,6 +27,7 @@ import static org.junit.Assert.assertNotEquals;
  */
 public abstract class AbstractBlankNodeTest {
 
+    protected abstract RDFContext getContext();
     protected abstract BlankNode getBlankNode();
 
     /**
@@ -50,17 +51,7 @@ public abstract class AbstractBlankNodeTest {
      */
     @Test
     public final void testInternalIdentifier() {
-        BlankNode testNull = new BlankNode() {
-            @Override
-            public String ntriplesString() {
-                return null;
-            }
-
-            @Override
-            public String uniqueReference() {
-                return null;
-            }
-        };
+        BlankNode testNull = nullBlankNode();
         BlankNode testAutomatic1 = getBlankNode();
         BlankNode testAutomatic2 = getBlankNode();
         BlankNode testManual3a = getBlankNode("3");
@@ -92,6 +83,9 @@ public abstract class AbstractBlankNodeTest {
                 testManual3a.uniqueReference());
         assertNotEquals(testManual3a.uniqueReference(),
                 testManual4.uniqueReference());
+
+        assertEquals(getContext(), testAutomatic1.getContext());
+        assertEquals(getContext(), testManual4.getContext());
     }
 
     /**
@@ -100,17 +94,7 @@ public abstract class AbstractBlankNodeTest {
      */
     @Test
     public final void testEquals() {
-        BlankNode testNull = new BlankNode() {
-            @Override
-            public String ntriplesString() {
-                return null;
-            }
-
-            @Override
-            public String uniqueReference() {
-                return null;
-            }
-        };
+        BlankNode testNull = nullBlankNode();
         BlankNode testAutomatic1 = getBlankNode();
         BlankNode testAutomatic2 = getBlankNode();
         BlankNode testManual3a = getBlankNode("3");
@@ -138,17 +122,7 @@ public abstract class AbstractBlankNodeTest {
      */
     @Test
     public final void testHashCode() {
-        BlankNode testNull = new BlankNode() {
-            @Override
-            public String ntriplesString() {
-                return null;
-            }
-
-            @Override
-            public String uniqueReference() {
-                return null;
-            }
-        };
+        BlankNode testNull = nullBlankNode();
         BlankNode testAutomatic1 = getBlankNode();
         BlankNode testAutomatic2 = getBlankNode();
         BlankNode testManual3a = getBlankNode("3");
@@ -177,17 +151,7 @@ public abstract class AbstractBlankNodeTest {
      */
     @Test
     public final void testNtriplesString() {
-        BlankNode testNull = new BlankNode() {
-            @Override
-            public String ntriplesString() {
-                return null;
-            }
-
-            @Override
-            public String uniqueReference() {
-                return null;
-            }
-        };
+        BlankNode testNull = nullBlankNode();
         BlankNode testAutomatic1 = getBlankNode();
         BlankNode testAutomatic2 = getBlankNode();
         BlankNode testManual3a = getBlankNode("3");
@@ -219,6 +183,25 @@ public abstract class AbstractBlankNodeTest {
                 testManual3a.ntriplesString());
         assertNotEquals(testManual3a.ntriplesString(),
                 testManual4.ntriplesString());
+    }
+
+    private BlankNode nullBlankNode() {
+        return new BlankNode() {
+            @Override
+            public String ntriplesString() {
+                return null;
+            }
+
+            @Override
+            public String uniqueReference() {
+                return null;
+            }
+
+            @Override
+            public RDFContext getContext() {
+                return null;
+            }
+        };
     }
 
 }

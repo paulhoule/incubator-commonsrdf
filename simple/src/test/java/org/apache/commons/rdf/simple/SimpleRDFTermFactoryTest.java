@@ -18,7 +18,7 @@
 package org.apache.commons.rdf.simple;
 
 import org.apache.commons.rdf.api.AbstractRDFTermFactoryTest;
-import org.apache.commons.rdf.api.RDFTermFactory;
+import org.apache.commons.rdf.api.RDFContext;
 
 /**
  * Simple RDFTermFactory Test
@@ -26,7 +26,7 @@ import org.apache.commons.rdf.api.RDFTermFactory;
 public class SimpleRDFTermFactoryTest extends AbstractRDFTermFactoryTest {
 
     @Override
-    public RDFTermFactory createFactory() {
+    public RDFContext createFactory() {
         return new SimpleRDFTermFactory();
     }
 

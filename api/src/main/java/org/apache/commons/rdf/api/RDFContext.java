@@ -37,7 +37,7 @@ import java.util.Locale;
  * @see RDFTerm
  * @see Graph
  */
-public interface RDFTermFactory {
+public interface RDFContext {
 
     /**
      * Create a new blank node.
@@ -74,7 +74,7 @@ public interface RDFTermFactory {
      *
      * @param name
      *            A non-empty, non-null, String that is unique to this blank
-     *            node in the context of this {@link RDFTermFactory}.
+     *            node in the context of this {@link RDFContext}.
      * @return A BlankNode for the given name
      * @throws UnsupportedOperationException
      *             If the operation is not supported.

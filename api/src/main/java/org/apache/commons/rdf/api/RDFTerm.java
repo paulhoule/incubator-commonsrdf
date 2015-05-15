@@ -26,7 +26,7 @@ package org.apache.commons.rdf.api;
  * @see <a href= "http://www.w3.org/TR/rdf11-concepts/#dfn-rdf-term" >RDF-1.1
  * Term</a>
  */
-public interface RDFTerm {
+public interface RDFTerm extends RDF {
 
     /**
      * Return the term serialised as specified by the RDF-1.1 N-Triples Canonical form.

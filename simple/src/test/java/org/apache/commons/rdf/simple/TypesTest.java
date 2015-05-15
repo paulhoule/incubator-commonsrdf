@@ -21,12 +21,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.apache.commons.rdf.api.RDFContext;
 import org.junit.Test;
 
 /**
  * Tests for the {@link org.apache.commons.rdf.simple.Types} enumeration.
  */
 public class TypesTest {
+
+    static final RDFContext context=new SimpleRDFTermFactory();
 
     /**
      * Test method for {@link org.apache.commons.rdf.simple.Types#getIRIString()}
@@ -56,15 +59,15 @@ public class TypesTest {
     @Test
     public final void testGet() {
         assertTrue(Types.get(
-                new IRIImpl("http://www.w3.org/2001/XMLSchema#boolean"))
-                .isPresent());
+                context.createIRI("http://www.w3.org/2001/XMLSchema#boolean")
+        ).isPresent());
         assertEquals(
                 "http://www.w3.org/2001/XMLSchema#boolean",
                 Types.get(
-                        new IRIImpl("http://www.w3.org/2001/XMLSchema#boolean"))
+                        context.createIRI("http://www.w3.org/2001/XMLSchema#boolean"))
                         .get().getIRIString());
         assertFalse(Types.get(
-                new IRIImpl("http://www.w3.org/2001/XMLSchema#nonExistent"))
+                context.createIRI("http://www.w3.org/2001/XMLSchema#nonExistent"))
                 .isPresent());
     }
 
