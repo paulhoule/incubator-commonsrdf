@@ -51,6 +51,7 @@ public interface Graph extends AutoCloseable,RDF {
      * @param predicate The triple predicate
      * @param object    The triple object
      */
+
     default void add(BlankNodeOrIRI subject, IRI predicate, RDFTerm object) {
         add(getContext().createTriple(subject, predicate, object));
     }
@@ -58,97 +59,97 @@ public interface Graph extends AutoCloseable,RDF {
     default void add(BlankNodeOrIRI subject, IRI predicate,
                                 String text,String language) throws IllegalArgumentException,
             UnsupportedOperationException {
-        add(getContext().createTriple(subject, predicate, text, language));
+        add(subject, predicate, getContext().createLiteral(text, language));
     }
 
     default void add(BlankNodeOrIRI subject, IRI predicate,
                                 String rawString) throws IllegalArgumentException,
             UnsupportedOperationException {
-        add(getContext().createTriple(subject,predicate,rawString));
+        add(subject,predicate,getContext().createLiteral(rawString));
     }
 
     default void add(BlankNodeOrIRI subject, IRI predicate,
                                 String lexicalForm,IRI datatype) throws IllegalArgumentException,
             UnsupportedOperationException {
-        add(getContext().createTriple(subject, predicate, lexicalForm, datatype));
+        add(subject, predicate, getContext().createLiteral(lexicalForm, datatype));
     }
 
     default void add(BlankNodeOrIRI subject, IRI predicate,
                                 long value) throws IllegalArgumentException,
             UnsupportedOperationException {
-        add(getContext().createTriple(subject,predicate,value));
+        add(subject,predicate,getContext().createLiteral(value));
     }
 
     default void add(BlankNodeOrIRI subject, IRI predicate,
                                 int value) throws IllegalArgumentException,
             UnsupportedOperationException {
-        add(getContext().createTriple(subject,predicate,value));
+        add(subject,predicate,getContext().createLiteral(value));
     }
 
     default void add(BlankNodeOrIRI subject, IRI predicate,
                                 short value) throws IllegalArgumentException,
             UnsupportedOperationException {
-        add(getContext().createTriple(subject,predicate,value));
+        add(subject,predicate,getContext().createLiteral(value));
     }
 
     default void add(BlankNodeOrIRI subject, IRI predicate,
                                 byte value) throws IllegalArgumentException,
             UnsupportedOperationException {
-        add(getContext().createTriple(subject, predicate, value));
+        add(subject, predicate, getContext().createLiteral(value));
     }
 
     default void add(BlankNodeOrIRI subject, IRI predicate,
                                 BigInteger value) throws IllegalArgumentException,
             UnsupportedOperationException {
-        add(getContext().createTriple(subject, predicate, value));
+        add(subject, predicate, getContext().createLiteral(value));
     }
 
     default void add(BlankNodeOrIRI subject, IRI predicate,
                                 BigDecimal value) throws IllegalArgumentException,
             UnsupportedOperationException {
-        add(getContext().createTriple(subject, predicate, value));
+        add(subject, predicate, getContext().createLiteral(value));
     }
 
     default  void add(BlankNodeOrIRI subject, IRI predicate,
                                 float value) throws IllegalArgumentException,
             UnsupportedOperationException {
-        add(getContext().createTriple(subject, predicate, value));
+        add(subject, predicate, getContext().createLiteral(value));
     }
 
     default  void add(BlankNodeOrIRI subject, IRI predicate,
                                 double value) throws IllegalArgumentException,
             UnsupportedOperationException {
-        add(getContext().createTriple(subject, predicate, value));
+        add(subject, predicate, getContext().createLiteral(value));
     }
 
     default void add(BlankNodeOrIRI subject, IRI predicate,
                                 OffsetDateTime value) throws IllegalArgumentException,
             UnsupportedOperationException {
-        add(getContext().createTriple(subject, predicate, value));
+        add(subject, predicate, getContext().createLiteral(value));
     }
 
     default  void add(BlankNodeOrIRI subject, IRI predicate,
                                 LocalDateTime value) throws IllegalArgumentException,
             UnsupportedOperationException {
-        add(getContext().createTriple(subject, predicate, value));
+        add(subject, predicate, getContext().createLiteral(value));
     }
 
     default  void add(BlankNodeOrIRI subject, IRI predicate,
                                 LocalDate value) throws IllegalArgumentException,
             UnsupportedOperationException {
-        add(getContext().createTriple(subject, predicate, value));
+        add(subject, predicate, getContext().createLiteral(value));
     }
 
     default  void add(BlankNodeOrIRI subject, IRI predicate,
                                 LocalTime value) throws IllegalArgumentException,
             UnsupportedOperationException {
-        add(getContext().createTriple(subject, predicate, value));
+        add(subject, predicate, getContext().createLiteral(value));
     }
 
     default  void addDynamic(BlankNodeOrIRI subject, IRI predicate,
                                        Object value) throws IllegalArgumentException,
             UnsupportedOperationException {
-        add(getContext().createTripleDynamic(subject, predicate, value));
+        add(subject, predicate, getContext().createLiteralDynamic(value));
     }
     
     /**
@@ -296,6 +297,7 @@ public interface Graph extends AutoCloseable,RDF {
      * @param predicate The triple predicate (null is a wildcard)
      * @param object    The triple object (null is a wildcard)
      */
+
     void remove(BlankNodeOrIRI subject, IRI predicate, RDFTerm object);
 
     /**
