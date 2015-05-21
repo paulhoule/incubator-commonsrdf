@@ -18,6 +18,12 @@
 package org.apache.commons.rdf.api;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
 import java.util.Locale;
 
 /**
@@ -239,4 +245,203 @@ public interface RDFContext {
                 "createTriple(BlankNodeOrIRI,IRI,RDFTerm) not supported");
     }
 
+    // -- below here,  default methods actually do something
+
+    default Literal createLiteral(long value) {
+        return createLiteral(Long.toString(value),createIRI("http://www.w3.org/2001/XMLSchema#integer"));
+    }
+
+    //
+    // this opens the possibility of having
+    //
+    // (i) a smaller internal representation,  and/or
+    // (ii) being more specific about narrower data types
+    //
+    //
+
+    default Literal createLiteral(byte value) {
+        return createLiteral((long) value);
+    }
+
+    default Literal createLiteral(short value) {
+        return createLiteral((long) value);
+    }
+
+    default Literal createLiteral(int value) {
+        return createLiteral((long) value);
+    }
+
+    default Literal createLiteral(BigInteger value) {
+        return createLiteral(value.toString(),createIRI("http://www.w3.org/2001/XMLSchema#integer"));
+    }
+
+    default Literal createLiteral(BigDecimal value) {
+        return createLiteral(value.toString(),createIRI("http://www.w3.org/2001/XMLSchema#decimal"));
+    }
+
+    default Literal createLiteral(float value) {
+        return createLiteral(Float.toString(value),createIRI("http://www.w3.org/2001/XMLSchema#float"));
+    }
+
+    default Literal createLiteral(double value) {
+        return createLiteral(Double.toString(value),createIRI("http://www.w3.org/2001/XMLSchema#double"));
+    }
+
+    default Literal createLiteral(boolean value) {
+        return createLiteral(Boolean.toString(value),createIRI("http://www.w3.org/2001/XMLSchema#boolean"));
+    }
+
+    //
+    // This may collapse the hh:mm:ss part if mm or ss are zero,  so we may want to amend the form.  We
+    // do want permissive parsing on the way back
+    //
+
+    default Literal createLiteral(OffsetDateTime value) {
+        return createLiteral(value.toString(),createIRI("http://www.w3.org/2001/XMLSchema#datetime"));
+    }
+
+    default Literal createLiteral(LocalDateTime value) {
+        return createLiteral(value.toString(),createIRI("http://www.w3.org/2001/XMLSchema#datetime"));
+    }
+
+    default Literal createLiteral(LocalDate value) {
+        return createLiteral(value.toString(),createIRI("http://www.w3.org/2001/XMLSchema#date"));
+    }
+
+    default Literal createLiteral(LocalTime value) {
+        return createLiteral(value.toString(),createIRI("http://www.w3.org/2001/XMLSchema#time"));
+    }
+
+    //
+    //
+    // many kinds of literal types could be worth adding,  such as
+    //
+    // byte[] -> hexBytes
+    // xsd:gYearMonth
+    // xsd:gYear	xsd:gMonthDay	xsd:gDay	xsd:gMonth
+    // unsigned ints of various sorts (often you use some ordinary integer and just treat it differently.
+    // Guava has libraries for doing this AND unsigned int types.
+    //
+
+    //
+    // right now this is a stub to illustrate the concept.  The idea is that we need the above polymorphic
+    // functions for speed when the type is known at compile time but sometimes you just want to turn an object
+    // to a literal and don't care what it is
+    //
+    // a smarter implementation might be configured with a hashmap and certainly specialist RDFContext(s)
+    // should be able to handle special types
+    //
+
+    default Literal createLiteralDynamic(Object o) {
+        if(o instanceof String) {
+            return createLiteral((String) o);
+        } else if(o instanceof Float) {
+            return createLiteral((float) o);
+        } else if(o instanceof Double) {
+            return createLiteral((double) o);
+        }
+
+        throw new IllegalArgumentException("Cannot interpret object of type ["+o.getClass()+"] as an RDF literal");
+    };
+
+    //
+    // now under ideal circumstances you should be able to create a triple without having to
+    // create a Literal()
+    //
+
+    default Triple createTriple(BlankNodeOrIRI subject, IRI predicate,
+                                String text,String language) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return createTriple(subject,predicate,createLiteral(text,language));
+    }
+
+    default Triple createTriple(BlankNodeOrIRI subject, IRI predicate,
+                                String rawString) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return createTriple(subject,predicate,createLiteral(rawString));
+    }
+
+    default Triple createTriple(BlankNodeOrIRI subject, IRI predicate,
+                                String lexicalForm,IRI datatype) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return createTriple(subject,predicate,createLiteral(lexicalForm, datatype));
+    }
+
+    default Triple createTriple(BlankNodeOrIRI subject, IRI predicate,
+                                long value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return createTriple(subject,predicate,createLiteral(value));
+    }
+
+    default Triple createTriple(BlankNodeOrIRI subject, IRI predicate,
+                                int value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return createTriple(subject,predicate,createLiteral(value));
+    }
+
+    default Triple createTriple(BlankNodeOrIRI subject, IRI predicate,
+                                short value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return createTriple(subject,predicate,createLiteral(value));
+    }
+
+    default Triple createTriple(BlankNodeOrIRI subject, IRI predicate,
+                                     byte value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return createTriple(subject,predicate,createLiteral(value));
+    }
+
+    default Triple createTriple(BlankNodeOrIRI subject, IRI predicate,
+                                     BigInteger value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return createTriple(subject,predicate,createLiteral(value));
+    }
+
+    default Triple createTriple(BlankNodeOrIRI subject, IRI predicate,
+                                BigDecimal value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return createTriple(subject,predicate,createLiteral(value));
+    }
+
+    default Triple createTriple(BlankNodeOrIRI subject, IRI predicate,
+                                float value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return createTriple(subject,predicate,createLiteral(value));
+    }
+
+    default Triple createTriple(BlankNodeOrIRI subject, IRI predicate,
+                                double value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return createTriple(subject,predicate,createLiteral(value));
+    }
+
+    default Triple createTriple(BlankNodeOrIRI subject, IRI predicate,
+                                OffsetDateTime value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return createTriple(subject,predicate,createLiteral(value));
+    }
+
+    default Triple createTriple(BlankNodeOrIRI subject, IRI predicate,
+                                     LocalDateTime value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return createTriple(subject,predicate,createLiteral(value));
+    }
+
+    default Triple createTriple(BlankNodeOrIRI subject, IRI predicate,
+                                LocalDate value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return createTriple(subject,predicate,createLiteral(value));
+    }
+
+    default Triple createTriple(BlankNodeOrIRI subject, IRI predicate,
+                                LocalTime value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return createTriple(subject,predicate,createLiteral(value));
+    }
+
+    default Triple createTripleDynamic(BlankNodeOrIRI subject, IRI predicate,
+                                Object value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return createTriple(subject,predicate,createLiteralDynamic(value));
+    }
 }

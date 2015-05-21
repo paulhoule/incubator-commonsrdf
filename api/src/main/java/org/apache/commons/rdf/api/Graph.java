@@ -17,6 +17,12 @@
  */
 package org.apache.commons.rdf.api;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.stream.Stream;
@@ -45,8 +51,106 @@ public interface Graph extends AutoCloseable,RDF {
      * @param predicate The triple predicate
      * @param object    The triple object
      */
-    void add(BlankNodeOrIRI subject, IRI predicate, RDFTerm object);
+    default void add(BlankNodeOrIRI subject, IRI predicate, RDFTerm object) {
+        add(getContext().createTriple(subject, predicate, object));
+    }
 
+    default void add(BlankNodeOrIRI subject, IRI predicate,
+                                String text,String language) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        add(getContext().createTriple(subject, predicate, text, language));
+    }
+
+    default void add(BlankNodeOrIRI subject, IRI predicate,
+                                String rawString) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        add(getContext().createTriple(subject,predicate,rawString));
+    }
+
+    default void add(BlankNodeOrIRI subject, IRI predicate,
+                                String lexicalForm,IRI datatype) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        add(getContext().createTriple(subject, predicate, lexicalForm, datatype));
+    }
+
+    default void add(BlankNodeOrIRI subject, IRI predicate,
+                                long value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        add(getContext().createTriple(subject,predicate,value));
+    }
+
+    default void add(BlankNodeOrIRI subject, IRI predicate,
+                                int value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        add(getContext().createTriple(subject,predicate,value));
+    }
+
+    default void add(BlankNodeOrIRI subject, IRI predicate,
+                                short value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        add(getContext().createTriple(subject,predicate,value));
+    }
+
+    default void add(BlankNodeOrIRI subject, IRI predicate,
+                                byte value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        add(getContext().createTriple(subject, predicate, value));
+    }
+
+    default void add(BlankNodeOrIRI subject, IRI predicate,
+                                BigInteger value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        add(getContext().createTriple(subject, predicate, value));
+    }
+
+    default void add(BlankNodeOrIRI subject, IRI predicate,
+                                BigDecimal value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        add(getContext().createTriple(subject, predicate, value));
+    }
+
+    default  void add(BlankNodeOrIRI subject, IRI predicate,
+                                float value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        add(getContext().createTriple(subject, predicate, value));
+    }
+
+    default  void add(BlankNodeOrIRI subject, IRI predicate,
+                                double value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        add(getContext().createTriple(subject, predicate, value));
+    }
+
+    default void add(BlankNodeOrIRI subject, IRI predicate,
+                                OffsetDateTime value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        add(getContext().createTriple(subject, predicate, value));
+    }
+
+    default  void add(BlankNodeOrIRI subject, IRI predicate,
+                                LocalDateTime value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        add(getContext().createTriple(subject, predicate, value));
+    }
+
+    default  void add(BlankNodeOrIRI subject, IRI predicate,
+                                LocalDate value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        add(getContext().createTriple(subject, predicate, value));
+    }
+
+    default  void add(BlankNodeOrIRI subject, IRI predicate,
+                                LocalTime value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        add(getContext().createTriple(subject, predicate, value));
+    }
+
+    default  void addDynamic(BlankNodeOrIRI subject, IRI predicate,
+                                       Object value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        add(getContext().createTripleDynamic(subject, predicate, value));
+    }
+    
     /**
      * Check if graph contains triple.
      *
@@ -54,6 +158,102 @@ public interface Graph extends AutoCloseable,RDF {
      * @return True if the Graph contains the given Triple.
      */
     boolean contains(Triple triple);
+
+    default boolean contains(BlankNodeOrIRI subject, IRI predicate,
+                     String text,String language) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return contains(subject, predicate, getContext().createLiteral(text, language));
+    }
+
+    default boolean contains(BlankNodeOrIRI subject, IRI predicate,
+                     String rawString) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return contains(subject,predicate,getContext().createLiteral(rawString));
+    }
+
+    default boolean contains(BlankNodeOrIRI subject, IRI predicate,
+                     String lexicalForm,IRI datatype) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return contains(subject, predicate, getContext().createLiteral(lexicalForm, datatype));
+    }
+
+    default boolean contains(BlankNodeOrIRI subject, IRI predicate,
+                     long value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return contains(subject,predicate,getContext().createLiteral(value));
+    }
+
+    default boolean contains(BlankNodeOrIRI subject, IRI predicate,
+                     int value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return contains(subject,predicate,getContext().createLiteral(value));
+    }
+
+    default boolean contains(BlankNodeOrIRI subject, IRI predicate,
+                     short value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return contains(subject,predicate,getContext().createLiteral(value));
+    }
+
+    default boolean contains(BlankNodeOrIRI subject, IRI predicate,
+                     byte value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return contains(subject, predicate, getContext().createLiteral(value));
+    }
+
+    default boolean contains(BlankNodeOrIRI subject, IRI predicate,
+                     BigInteger value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return contains(subject, predicate, getContext().createLiteral(value));
+    }
+
+    default boolean contains(BlankNodeOrIRI subject, IRI predicate,
+                     BigDecimal value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return contains(subject, predicate, getContext().createLiteral(value));
+    }
+
+    default  boolean contains(BlankNodeOrIRI subject, IRI predicate,
+                      float value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return contains(subject, predicate, getContext().createLiteral(value));
+    }
+
+    default  boolean contains(BlankNodeOrIRI subject, IRI predicate,
+                      double value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return contains(subject, predicate, getContext().createLiteral(value));
+    }
+
+    default boolean contains(BlankNodeOrIRI subject, IRI predicate,
+                     OffsetDateTime value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return contains(subject, predicate, getContext().createLiteral(value));
+    }
+
+    default  boolean contains(BlankNodeOrIRI subject, IRI predicate,
+                      LocalDateTime value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return contains(subject, predicate, getContext().createLiteral(value));
+    }
+
+    default  boolean contains(BlankNodeOrIRI subject, IRI predicate,
+                      LocalDate value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return contains(subject, predicate, getContext().createLiteral(value));
+    }
+
+    default  boolean contains(BlankNodeOrIRI subject, IRI predicate,
+                      LocalTime value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return contains(subject, predicate, getContext().createLiteral(value));
+    }
+
+    default  boolean containsDynamic(BlankNodeOrIRI subject, IRI predicate,
+                             Object value) throws IllegalArgumentException,
+            UnsupportedOperationException {
+        return contains(subject, predicate, getContext().createLiteralDynamic(value));
+    }
 
     /**
      * Check if graph contains a pattern of triples.

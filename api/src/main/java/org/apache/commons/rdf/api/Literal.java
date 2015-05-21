@@ -18,7 +18,14 @@
 package org.apache.commons.rdf.api;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * A RDF-1.1 Literal, as defined by <a href=
@@ -115,5 +122,89 @@ public interface Literal extends RDFTerm {
      */
     @Override
     public int hashCode();
+
+    //
+    // These "straw man" implementations don't check the underlying data type but maybe they
+    // don't need to...
+    //
+
+    public default byte asByte() {
+        return Byte.parseByte(getLexicalForm());
+    }
+
+    public default short asShort() {
+        return Short.parseShort(getLexicalForm());
+    }
+
+    public default int asInteger() {
+        return Integer.parseInt(getLexicalForm());
+    }
+
+    public default long asLong() {
+        return Long.parseLong(getLexicalForm());
+    }
+
+    public default float asFloat() {
+        return Float.parseFloat(getLexicalForm());
+    }
+
+    public default double asDouble() {
+        return Float.parseFloat(getLexicalForm());
+    }
+
+    public default BigInteger asBigInteger() {
+        return new BigInteger(getLexicalForm());
+    }
+
+    public default BigDecimal asBigDecimal() {
+        return new BigDecimal(getLexicalForm());
+    }
+
+    public default boolean asBoolean() {
+        return Boolean.parseBoolean(getLexicalForm());
+    }
+
+    //
+    // note this has corner cases galore such as what to do if there is no time zone or if it
+    // just a date,  or what if we want a LocalDateTime but there is a timezone (auto convert to
+    // local timezone?)
+    //
+
+    public default OffsetDateTime asDateTime() {
+        return OffsetDateTime.parse(getLexicalForm());
+    }
+
+    public default LocalDate asDate() {
+        return LocalDate.parse(getLexicalForm());
+    }
+
+    public default OffsetTime asTime() {
+        return OffsetTime.parse(getLexicalForm());
+    }
+
+    //
+    // we don't really need this...
+    //
+
+    public default String asRawString() {
+        return getLexicalForm();
+    }
+
+    //
+    // this function is not fully filled in at this point in time
+    //
+
+    public default Object asObject() {
+        switch(getDatatype().getIRIString()) {
+            case "http://www.w3.org/2001/XMLSchema#string":
+                return asRawString();
+            case "http://www.w3.org/2001/XMLSchema#float":
+                return asFloat();
+            case "http://www.w3.org/2001/XMLSchema#double":
+                return asDouble();
+        }
+
+        return ntriplesString();
+    };
 
 }
