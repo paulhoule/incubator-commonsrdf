@@ -18,6 +18,7 @@
 package org.apache.commons.rdf.simple;
 
 import org.apache.commons.rdf.api.IRI;
+import org.apache.commons.rdf.api.Immutable;
 import org.apache.commons.rdf.api.Literal;
 import org.apache.commons.rdf.api.RDFContext;
 

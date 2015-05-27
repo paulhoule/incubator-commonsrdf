@@ -19,14 +19,7 @@ package org.apache.commons.rdf.simple;
 
 import java.util.UUID;
 
-import org.apache.commons.rdf.api.BlankNode;
-import org.apache.commons.rdf.api.BlankNodeOrIRI;
-import org.apache.commons.rdf.api.Graph;
-import org.apache.commons.rdf.api.IRI;
-import org.apache.commons.rdf.api.Literal;
-import org.apache.commons.rdf.api.RDFTerm;
-import org.apache.commons.rdf.api.RDFContext;
-import org.apache.commons.rdf.api.Triple;
+import org.apache.commons.rdf.api.*;
 
 /**
  * A simple implementation of RDFTermFactory.
@@ -35,7 +28,7 @@ import org.apache.commons.rdf.api.Triple;
  * simple in-memory Implementations that are not thread-safe or efficient, but
  * which may be useful for testing and prototyping purposes.
  */
-public class SimpleRDFTermFactory implements RDFContext {
+public class SimpleRDFTermFactory implements RDFContext,Immutable {
 
     /** Unique salt per instance, for {@link #createBlankNode(String)}
      */

@@ -23,6 +23,7 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.commons.rdf.api.BlankNode;
+import org.apache.commons.rdf.api.Immutable;
 import org.apache.commons.rdf.api.RDFContext;
 
 /**
