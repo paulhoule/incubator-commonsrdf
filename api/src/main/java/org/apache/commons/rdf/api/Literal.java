@@ -23,6 +23,7 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
+import java.time.temporal.Temporal;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -170,7 +171,7 @@ public interface Literal extends RDFTerm {
     // local timezone?)
     //
 
-    public default OffsetDateTime asDateTime() {
+    public default Temporal asDateTime() {
         return OffsetDateTime.parse(getLexicalForm());
     }
 
