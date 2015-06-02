@@ -517,4 +517,21 @@ public abstract class AbstractRDFTermFactoryTest {
         assertEquals("http://www.w3.org/2001/XMLSchema#datetime",thenRDF.getDatatype().getIRIString());
     }
 
+    @Test
+    public void testLocalDate() {
+        LocalDate thenNative=LocalDate.of(1986, Month.JANUARY, 24);
+
+        Literal thenRDF= factory.createLiteral(thenNative);
+        assertEquals(thenNative,thenRDF.asDateTime());
+        assertEquals("http://www.w3.org/2001/XMLSchema#date",thenRDF.getDatatype().getIRIString());
+    }
+
+    @Test
+    public void testLocalTime() {
+        LocalTime thenNative=LocalTime.of(8, 37, 52);
+        Literal thenRDF= factory.createLiteral(thenNative);
+        assertEquals(thenNative,thenRDF.asDateTime());
+        assertEquals("http://www.w3.org/2001/XMLSchema#time",thenRDF.getDatatype().getIRIString());
+    }
+
 }

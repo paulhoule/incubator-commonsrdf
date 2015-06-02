@@ -20,10 +20,7 @@ package org.apache.commons.rdf.api;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.OffsetTime;
+import java.time.*;
 import java.time.temporal.Temporal;
 import java.util.Map;
 import java.util.Optional;
@@ -167,17 +164,22 @@ public interface Literal extends RDFTerm {
     }
 
     //
-    // note this has corner cases galore such as what to do if there is no time zone or if it
-    // just a date,  or what if we want a LocalDateTime but there is a timezone (auto convert to
-    // local timezone?)
+    // lame as hell;  it is deliberate that we're not checking the type because we want to
+    // be permissive,  particularly to parse rawstrings.
     //
 
     public default Temporal asDateTime() {
         String lf=getLexicalForm();
+        if (lf.charAt(2)==':') {
+            return LocalTime.parse(lf);
+        }
+
         if (lf.length()>19) {
-            return OffsetDateTime.parse(getLexicalForm());
+            return OffsetDateTime.parse(lf);
+        } else if(lf.length()>10) {
+            return LocalDateTime.parse(lf);
         } else {
-            return LocalDateTime.parse(getLexicalForm());
+            return LocalDate.parse(lf);
         }
     }
 
