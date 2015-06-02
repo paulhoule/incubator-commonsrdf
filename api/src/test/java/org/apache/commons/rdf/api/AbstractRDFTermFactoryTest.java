@@ -513,6 +513,7 @@ public abstract class AbstractRDFTermFactoryTest {
 
 
         Literal thenRDF= factory.createLiteral(thenNative);
+        assertEquals(thenNative,thenRDF.asDateTime());
         assertEquals("http://www.w3.org/2001/XMLSchema#datetime",thenRDF.getDatatype().getIRIString());
     }
 

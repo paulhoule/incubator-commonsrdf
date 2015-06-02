@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.time.temporal.Temporal;
@@ -172,7 +173,12 @@ public interface Literal extends RDFTerm {
     //
 
     public default Temporal asDateTime() {
-        return OffsetDateTime.parse(getLexicalForm());
+        String lf=getLexicalForm();
+        if (lf.length()>19) {
+            return OffsetDateTime.parse(getLexicalForm());
+        } else {
+            return LocalDateTime.parse(getLexicalForm());
+        }
     }
 
     public default LocalDate asDate() {
