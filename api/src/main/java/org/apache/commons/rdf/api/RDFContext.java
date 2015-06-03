@@ -20,10 +20,7 @@ package org.apache.commons.rdf.api;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.OffsetDateTime;
+import java.time.*;
 import java.util.Locale;
 
 /**
@@ -312,6 +309,10 @@ public interface RDFContext {
         return createLiteral(value.toString(),createIRI("http://www.w3.org/2001/XMLSchema#time"));
     }
 
+    default Literal createLiteral(OffsetTime value) {
+        return createLiteral(value.toString(),createIRI("http://www.w3.org/2001/XMLSchema#time"));
+    }
+
     //
     //
     // many kinds of literal types could be worth adding,  such as
@@ -438,6 +439,7 @@ public interface RDFContext {
             UnsupportedOperationException {
         return createTriple(subject,predicate,createLiteral(value));
     }
+
 
     default Triple createTripleDynamic(BlankNodeOrIRI subject, IRI predicate,
                                 Object value) throws IllegalArgumentException,

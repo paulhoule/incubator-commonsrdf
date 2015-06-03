@@ -29,6 +29,7 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.*;
+import java.util.TimeZone;
 
 /**
  * Test RDFTermFactory implementation (and thus its RDFTerm implementations)
@@ -545,7 +546,7 @@ public abstract class AbstractRDFTermFactoryTest {
                             ZoneOffset.ofHours(-5)
                     );
             Literal thenRDF= factory.createLiteral(thenNative);
-            assertEquals(thenNative,thenRDF.asDateTime());
+            assertEquals(thenNative,thenRDF.asTemporal());
             assertEquals("http://www.w3.org/2001/XMLSchema#datetime",thenRDF.getDatatype().getIRIString());
         } catch (UnsupportedOperationException ex) {
             Assume.assumeNoException(ex);
@@ -564,7 +565,7 @@ public abstract class AbstractRDFTermFactoryTest {
 
 
             Literal thenRDF= factory.createLiteral(thenNative);
-            assertEquals(thenNative,thenRDF.asDateTime());
+            assertEquals(thenNative,thenRDF.asTemporal());
             assertEquals("http://www.w3.org/2001/XMLSchema#datetime",thenRDF.getDatatype().getIRIString());
         } catch (UnsupportedOperationException ex) {
             Assume.assumeNoException(ex);
@@ -578,7 +579,7 @@ public abstract class AbstractRDFTermFactoryTest {
             LocalDate thenNative=LocalDate.of(1986, Month.JANUARY, 24);
 
             Literal thenRDF= factory.createLiteral(thenNative);
-            assertEquals(thenNative,thenRDF.asDateTime());
+            assertEquals(thenNative,thenRDF.asTemporal());
             assertEquals("http://www.w3.org/2001/XMLSchema#date",thenRDF.getDatatype().getIRIString());
         } catch (UnsupportedOperationException ex) {
             Assume.assumeNoException(ex);
@@ -591,7 +592,20 @@ public abstract class AbstractRDFTermFactoryTest {
         try {
             LocalTime thenNative=LocalTime.of(8, 37, 52);
             Literal thenRDF= factory.createLiteral(thenNative);
-            assertEquals(thenNative,thenRDF.asDateTime());
+            assertEquals(thenNative,thenRDF.asTemporal());
+            assertEquals("http://www.w3.org/2001/XMLSchema#time",thenRDF.getDatatype().getIRIString());
+        } catch (UnsupportedOperationException ex) {
+            Assume.assumeNoException(ex);
+            return;
+        }
+    }
+
+    @Test
+    public void testOffsetTime() {
+        try {
+            OffsetTime thenNative=OffsetTime.of(8, 37, 52, 371*1000*1000, ZoneOffset.ofHours(5));
+            Literal thenRDF= factory.createLiteral(thenNative);
+            assertEquals(thenNative,thenRDF.asTemporal());
             assertEquals("http://www.w3.org/2001/XMLSchema#time",thenRDF.getDatatype().getIRIString());
         } catch (UnsupportedOperationException ex) {
             Assume.assumeNoException(ex);

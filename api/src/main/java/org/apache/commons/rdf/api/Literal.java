@@ -168,9 +168,12 @@ public interface Literal extends RDFTerm {
     // be permissive,  particularly to parse rawstrings.
     //
 
-    public default Temporal asDateTime() {
+    public default Temporal asTemporal() {
         String lf=getLexicalForm();
         if (lf.charAt(2)==':') {
+            if(lf.contains("+") || lf.contains("-") || lf.contains("Z"))
+                return OffsetTime.parse(lf);
+
             return LocalTime.parse(lf);
         }
 
@@ -181,14 +184,6 @@ public interface Literal extends RDFTerm {
         } else {
             return LocalDate.parse(lf);
         }
-    }
-
-    public default LocalDate asDate() {
-        return LocalDate.parse(getLexicalForm());
-    }
-
-    public default OffsetTime asTime() {
-        return OffsetTime.parse(getLexicalForm());
     }
 
     //
