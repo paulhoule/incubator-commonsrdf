@@ -187,6 +187,46 @@ public interface Literal extends RDFTerm {
     }
 
     //
+    // the list of integer comes from part 17.1 of
+    // http://www.w3.org/TR/sparql11-query/
+    //
+    public default Object asDynamic() {
+        switch(getLexicalForm()) {
+            case "http://www.w3.org/2001/XMLSchema#integer":
+            case "http://www.w3.org/2001/XMLSchema#unsignedLong":
+            case "http://www.w3.org/2001/XMLSchema#nonNegativeInteger":
+            case "http://www.w3.org/2001/XMLSchema#positiveInteger":
+                return asBigInteger();
+
+            case "http://www.w3.org/2001/XMLSchema#byte":
+            case "http://www.w3.org/2001/XMLSchema#short":
+            case "http://www.w3.org/2001/XMLSchema#long":
+            case "http://www.w3.org/2001/XMLSchema#int":
+            case "http://www.w3.org/2001/XMLSchema#unsignedInt":
+            case "http://www.w3.org/2001/XMLSchema#unsignedShort":
+            case "http://www.w3.org/2001/XMLSchema#unsignedByte":
+                return asLong();
+
+            case "http://www.w3.org/2001/XMLSchema#decimal":
+                return asBigDecimal();
+
+            case "http://www.w3.org/2001/XMLSchema#float":
+                return asFloat();
+
+            case "http://www.w3.org/2001/XMLSchema#double":
+                return asDouble();
+
+            case "http://www.w3.org/2001/XMLSchema#date":
+            case "http://www.w3.org/2001/XMLSchema#time":
+            case "http://www.w3.org/2001/XMLSchema#dateTime":
+                return asDouble();
+
+        }
+
+        return asRawString();
+    }
+
+    //
     // we don't really need this...
     //
 

@@ -547,7 +547,7 @@ public abstract class AbstractRDFTermFactoryTest {
                     );
             Literal thenRDF= factory.createLiteral(thenNative);
             assertEquals(thenNative,thenRDF.asTemporal());
-            assertEquals("http://www.w3.org/2001/XMLSchema#datetime",thenRDF.getDatatype().getIRIString());
+            assertEquals("http://www.w3.org/2001/XMLSchema#dateTime",thenRDF.getDatatype().getIRIString());
         } catch (UnsupportedOperationException ex) {
             Assume.assumeNoException(ex);
             return;
@@ -566,7 +566,7 @@ public abstract class AbstractRDFTermFactoryTest {
 
             Literal thenRDF= factory.createLiteral(thenNative);
             assertEquals(thenNative,thenRDF.asTemporal());
-            assertEquals("http://www.w3.org/2001/XMLSchema#datetime",thenRDF.getDatatype().getIRIString());
+            assertEquals("http://www.w3.org/2001/XMLSchema#dateTime",thenRDF.getDatatype().getIRIString());
         } catch (UnsupportedOperationException ex) {
             Assume.assumeNoException(ex);
             return;

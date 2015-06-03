@@ -294,11 +294,11 @@ public interface RDFContext {
     //
 
     default Literal createLiteral(OffsetDateTime value) {
-        return createLiteral(value.toString(),createIRI("http://www.w3.org/2001/XMLSchema#datetime"));
+        return createLiteral(value.toString(),createIRI("http://www.w3.org/2001/XMLSchema#dateTime"));
     }
 
     default Literal createLiteral(LocalDateTime value) {
-        return createLiteral(value.toString(),createIRI("http://www.w3.org/2001/XMLSchema#datetime"));
+        return createLiteral(value.toString(),createIRI("http://www.w3.org/2001/XMLSchema#dateTime"));
     }
 
     default Literal createLiteral(LocalDate value) {
@@ -334,16 +334,36 @@ public interface RDFContext {
     //
 
     default Literal createLiteralDynamic(Object o) {
-        if(o instanceof String) {
+        if (o instanceof String)
             return createLiteral((String) o);
-        } else if(o instanceof Float) {
-            return createLiteral((float) o);
-        } else if(o instanceof Double) {
-            return createLiteral((double) o);
-        }
+        if(o instanceof Long)
+            return createLiteral((Long) o);
+        if(o instanceof Integer)
+            return createLiteral((Integer) o);
+        if(o instanceof Short)
+            return createLiteral((Short) o);
+        if(o instanceof Byte)
+            return createLiteral((Byte) o);
+        if(o instanceof BigInteger)
+            return createLiteral((BigInteger) o);
+        if(o instanceof BigDecimal)
+            return createLiteral((BigDecimal) o);
+        if(o instanceof Boolean)
+            return createLiteral((Boolean) o);
+        if(o instanceof OffsetDateTime)
+            return createLiteral((OffsetDateTime) o);
+        if(o instanceof LocalDateTime)
+            return createLiteral((LocalDateTime) o);
+        if(o instanceof LocalDate)
+            return createLiteral((LocalDate) o);
+        if(o instanceof LocalTime)
+            return createLiteral((LocalTime) o);
+        if(o instanceof OffsetTime)
+            return createLiteral((OffsetTime) o);
 
-        throw new IllegalArgumentException("Cannot interpret object of type ["+o.getClass()+"] as an RDF literal");
-    };
+        throw new UnsupportedOperationException("createDynamic("+o.getClass()+")");
+    }
+
 
     //
     // now under ideal circumstances you should be able to create a triple without having to
