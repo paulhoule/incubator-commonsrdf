@@ -426,112 +426,177 @@ public abstract class AbstractRDFTermFactoryTest {
 
     @Test
     public void testLongRoundtrip() {
-        Literal seventyFive = factory.createLiteral(75L);
-        assertEquals(75L,seventyFive.asLong());
-        assertEquals("http://www.w3.org/2001/XMLSchema#integer",seventyFive.getDatatype().getIRIString());
+        try {
+            Literal seventyFive = factory.createLiteral(75L);
+            assertEquals(75L, seventyFive.asLong());
+            assertEquals("http://www.w3.org/2001/XMLSchema#integer", seventyFive.getDatatype().getIRIString());
+        } catch (UnsupportedOperationException ex) {
+                Assume.assumeNoException(ex);
+                return;
+        }
     }
 
     @Test
     public void testByteRoundtrip() {
-        Literal eight = factory.createLiteral((byte) 8);
-        assertEquals((byte) 8, eight.asByte());
-        assertEquals("http://www.w3.org/2001/XMLSchema#integer",eight.getDatatype().getIRIString());
+        try {
+            Literal eight = factory.createLiteral((byte) 8);
+            assertEquals((byte) 8, eight.asByte());
+            assertEquals("http://www.w3.org/2001/XMLSchema#integer",eight.getDatatype().getIRIString());
+        } catch (UnsupportedOperationException ex) {
+            Assume.assumeNoException(ex);
+            return;
+        }
     }
 
     @Test
     public void testShortRoundtrip() {
+        try {
         Literal fourThousand = factory.createLiteral((short) 4000);
         assertEquals((short) 4000, fourThousand.asShort());
         assertEquals("http://www.w3.org/2001/XMLSchema#integer",fourThousand.getDatatype().getIRIString());
+        } catch (UnsupportedOperationException ex) {
+            Assume.assumeNoException(ex);
+            return;
+        }
     }
 
     @Test
     public void testIntRoundtrip() {
+        try {
         Literal twoMillion = factory.createLiteral((int) 2000000);
         assertEquals(2000000, twoMillion.asInteger());
         assertEquals("http://www.w3.org/2001/XMLSchema#integer",twoMillion.getDatatype().getIRIString());
+        } catch (UnsupportedOperationException ex) {
+            Assume.assumeNoException(ex);
+            return;
+        }
     }
 
     @Test
     public void testBigIntegerRoundtrip() {
-        Literal threeNines= factory.createLiteral(new BigInteger("999"));
-        assertEquals(new BigInteger("999"), threeNines.asBigInteger());
-        assertEquals("http://www.w3.org/2001/XMLSchema#integer",threeNines.getDatatype().getIRIString());
+        try {
+            Literal threeNines= factory.createLiteral(new BigInteger("999"));
+            assertEquals(new BigInteger("999"), threeNines.asBigInteger());
+            assertEquals("http://www.w3.org/2001/XMLSchema#integer",threeNines.getDatatype().getIRIString());
+        } catch (UnsupportedOperationException ex) {
+            Assume.assumeNoException(ex);
+            return;
+        }
     }
 
     @Test
     public void testBigDecimalRoundtrip() {
-        Literal littlePi= factory.createLiteral(new BigDecimal("3.14"));
-        assertEquals(new BigDecimal("3.14"),littlePi.asBigDecimal());
-        assertEquals("http://www.w3.org/2001/XMLSchema#decimal",littlePi.getDatatype().getIRIString());
+        try {
+            Literal littlePi = factory.createLiteral(new BigDecimal("3.14"));
+            assertEquals(new BigDecimal("3.14"), littlePi.asBigDecimal());
+            assertEquals("http://www.w3.org/2001/XMLSchema#decimal", littlePi.getDatatype().getIRIString());
+        } catch (UnsupportedOperationException ex) {
+        Assume.assumeNoException(ex);
+        return;
+    }
     }
 
     @Test
     public void testFloatRoundtrip() {
-        Literal littleE= factory.createLiteral(2.718f);
-        assertEquals(2.718f,littleE.asFloat(),0.00001f);
-        assertEquals("http://www.w3.org/2001/XMLSchema#float",littleE.getDatatype().getIRIString());
+        try {
+            Literal littleE= factory.createLiteral(2.718f);
+            assertEquals(2.718f,littleE.asFloat(),0.00001f);
+            assertEquals("http://www.w3.org/2001/XMLSchema#float",littleE.getDatatype().getIRIString());
+        } catch (UnsupportedOperationException ex) {
+            Assume.assumeNoException(ex);
+            return;
+        }
     }
 
     @Test
     public void testDoubleRoundtrip() {
-        Literal littleDelta= factory.createLiteral(4.669201);
-        assertEquals(4.669201,littleDelta.asDouble(),0.000001);
-        assertEquals("http://www.w3.org/2001/XMLSchema#double", littleDelta.getDatatype().getIRIString());
+        try {
+            Literal littleDelta= factory.createLiteral(4.669201);
+            assertEquals(4.669201,littleDelta.asDouble(),0.000001);
+            assertEquals("http://www.w3.org/2001/XMLSchema#double", littleDelta.getDatatype().getIRIString());
+        } catch (UnsupportedOperationException ex) {
+            Assume.assumeNoException(ex);
+            return;
+        }
     }
 
     @Test
     public void testBooleanRoundtrip() {
-        Literal yes= factory.createLiteral(true);
-        assertEquals(true,yes.asBoolean());
-        assertEquals("http://www.w3.org/2001/XMLSchema#boolean",yes.getDatatype().getIRIString());
-        Literal no= factory.createLiteral(false);
-        assertEquals(false, no.asBoolean());
-        assertEquals("http://www.w3.org/2001/XMLSchema#boolean",no.getDatatype().getIRIString());
+        try {
+            Literal yes = factory.createLiteral(true);
+            assertEquals(true, yes.asBoolean());
+            assertEquals("http://www.w3.org/2001/XMLSchema#boolean", yes.getDatatype().getIRIString());
+            Literal no = factory.createLiteral(false);
+            assertEquals(false, no.asBoolean());
+            assertEquals("http://www.w3.org/2001/XMLSchema#boolean", no.getDatatype().getIRIString());
+        } catch (UnsupportedOperationException ex) {
+            Assume.assumeNoException(ex);
+            return;
+        }
     }
 
     @Test
     public void testOffsetDateTime() {
-        OffsetDateTime thenNative=OffsetDateTime.of(
-                LocalDateTime.of(
-                        LocalDate.of(2011, Month.MARCH, 24),
-                        LocalTime.of(15, 16, 17)) ,
-                        ZoneOffset.ofHours(-5)
-                );
-        Literal thenRDF= factory.createLiteral(thenNative);
-        assertEquals(thenNative,thenRDF.asDateTime());
-        assertEquals("http://www.w3.org/2001/XMLSchema#datetime",thenRDF.getDatatype().getIRIString());
+        try {
+            OffsetDateTime thenNative=OffsetDateTime.of(
+                    LocalDateTime.of(
+                            LocalDate.of(2011, Month.MARCH, 24),
+                            LocalTime.of(15, 16, 17)) ,
+                            ZoneOffset.ofHours(-5)
+                    );
+            Literal thenRDF= factory.createLiteral(thenNative);
+            assertEquals(thenNative,thenRDF.asDateTime());
+            assertEquals("http://www.w3.org/2001/XMLSchema#datetime",thenRDF.getDatatype().getIRIString());
+        } catch (UnsupportedOperationException ex) {
+            Assume.assumeNoException(ex);
+            return;
+        }
     }
 
     @Test
     public void testLocalDateTime() {
-        LocalDateTime thenNative=
-                LocalDateTime.of(
-                        LocalDate.of(2011, Month.MARCH, 24),
-                        LocalTime.of(15, 16, 17)
-        );
+        try {
+            LocalDateTime thenNative=
+                    LocalDateTime.of(
+                            LocalDate.of(2011, Month.MARCH, 24),
+                            LocalTime.of(15, 16, 17)
+            );
 
 
-        Literal thenRDF= factory.createLiteral(thenNative);
-        assertEquals(thenNative,thenRDF.asDateTime());
-        assertEquals("http://www.w3.org/2001/XMLSchema#datetime",thenRDF.getDatatype().getIRIString());
+            Literal thenRDF= factory.createLiteral(thenNative);
+            assertEquals(thenNative,thenRDF.asDateTime());
+            assertEquals("http://www.w3.org/2001/XMLSchema#datetime",thenRDF.getDatatype().getIRIString());
+        } catch (UnsupportedOperationException ex) {
+            Assume.assumeNoException(ex);
+            return;
+        }
     }
 
     @Test
     public void testLocalDate() {
-        LocalDate thenNative=LocalDate.of(1986, Month.JANUARY, 24);
+        try {
+            LocalDate thenNative=LocalDate.of(1986, Month.JANUARY, 24);
 
-        Literal thenRDF= factory.createLiteral(thenNative);
-        assertEquals(thenNative,thenRDF.asDateTime());
-        assertEquals("http://www.w3.org/2001/XMLSchema#date",thenRDF.getDatatype().getIRIString());
+            Literal thenRDF= factory.createLiteral(thenNative);
+            assertEquals(thenNative,thenRDF.asDateTime());
+            assertEquals("http://www.w3.org/2001/XMLSchema#date",thenRDF.getDatatype().getIRIString());
+        } catch (UnsupportedOperationException ex) {
+            Assume.assumeNoException(ex);
+            return;
+        }
     }
 
     @Test
     public void testLocalTime() {
-        LocalTime thenNative=LocalTime.of(8, 37, 52);
-        Literal thenRDF= factory.createLiteral(thenNative);
-        assertEquals(thenNative,thenRDF.asDateTime());
-        assertEquals("http://www.w3.org/2001/XMLSchema#time",thenRDF.getDatatype().getIRIString());
+        try {
+            LocalTime thenNative=LocalTime.of(8, 37, 52);
+            Literal thenRDF= factory.createLiteral(thenNative);
+            assertEquals(thenNative,thenRDF.asDateTime());
+            assertEquals("http://www.w3.org/2001/XMLSchema#time",thenRDF.getDatatype().getIRIString());
+        } catch (UnsupportedOperationException ex) {
+            Assume.assumeNoException(ex);
+            return;
+        }
     }
 
 }
