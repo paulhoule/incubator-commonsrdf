@@ -191,7 +191,7 @@ public interface Literal extends RDFTerm {
     // http://www.w3.org/TR/sparql11-query/
     //
     public default Object asDynamic() {
-        switch(getLexicalForm()) {
+        switch(getDatatype().getIRIString()) {
             case "http://www.w3.org/2001/XMLSchema#integer":
             case "http://www.w3.org/2001/XMLSchema#unsignedLong":
             case "http://www.w3.org/2001/XMLSchema#nonNegativeInteger":

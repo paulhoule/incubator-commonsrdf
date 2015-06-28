@@ -149,7 +149,7 @@ public abstract class AbstractRDFTermFactoryTest {
             return;
         }
 
-        assertEquals(factory,example.getContext());
+        assertEquals(factory, example.getContext());
         assertEquals("http://example.com/", example.getIRIString());
         assertEquals("<http://example.com/>", example.ntriplesString());
 
@@ -542,9 +542,9 @@ public abstract class AbstractRDFTermFactoryTest {
             OffsetDateTime thenNative=OffsetDateTime.of(
                     LocalDateTime.of(
                             LocalDate.of(2011, Month.MARCH, 24),
-                            LocalTime.of(15, 16, 17)) ,
-                            ZoneOffset.ofHours(-5)
-                    );
+                            LocalTime.of(15, 16, 17)),
+                    ZoneOffset.ofHours(-5)
+            );
             Literal thenRDF= factory.createLiteral(thenNative);
             assertEquals(thenNative,thenRDF.asTemporal());
             assertEquals("http://www.w3.org/2001/XMLSchema#dateTime",thenRDF.getDatatype().getIRIString());
@@ -612,5 +612,27 @@ public abstract class AbstractRDFTermFactoryTest {
             return;
         }
     }
+
+    @Test
+    public void testDynamicString() {
+        Literal l=factory.createLiteralDynamic("Hello");
+        assertEquals("http://www.w3.org/2001/XMLSchema#string",l.getDatatype().getIRIString());
+        assertEquals("Hello",l.asDynamic());
+    }
+
+    @Test
+    public void testDynamicLong() {
+        Literal l=factory.createLiteralDynamic(79L);
+        assertEquals("http://www.w3.org/2001/XMLSchema#integer",l.getDatatype().getIRIString());
+        assertEquals(BigInteger.valueOf(79),l.asDynamic());
+    }
+
+    @Test
+    public void testDynamicInteger() {
+        Literal l=factory.createLiteralDynamic(115);
+        assertEquals("http://www.w3.org/2001/XMLSchema#integer",l.getDatatype().getIRIString());
+        assertEquals(BigInteger.valueOf(115),l.asDynamic());
+    }
+
 
 }
